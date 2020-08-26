@@ -18,11 +18,20 @@ public class EmployeeModel {
     private String name;
     private String team;
     private String position;
+    private long salary;
 
 
  
     public String getPosition() {
 		return position;
+	}
+
+	public long getSalary() {
+		return salary;
+	}
+
+	public void setSalary(long salary) {
+		this.salary = salary;
 	}
 
 	public void setPosition(String position) {
@@ -46,18 +55,22 @@ public class EmployeeModel {
         this.team = team;
     }
 
-    public static EmployeeModel create(String name, String team, String position) {
+    public static EmployeeModel create(String name, String team, String position, long salary) {
     	EmployeeModel employee = new EmployeeModel();
         employee.setName(name);
         employee.setTeam(team);
         employee.setPosition(position);
+        employee.setSalary(salary);
         return employee;
     }
-    
-    @Override
+
+	@Override
 	public String toString() {
-		return "EmployeeModel [ name=" + name + ", team=" + team + ", position=" + position + "]";
+		return "EmployeeModel [id=" + id + ", name=" + name + ", team=" + team + ", position=" + position + ", salary="
+				+ salary + "]";
 	}
+    
+
 
 
 }
