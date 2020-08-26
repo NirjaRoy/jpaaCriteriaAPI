@@ -24,6 +24,7 @@ public class EmployeeMain {
             findByTeam();
             findByTeams();
             findByTeamAndLevel();
+            findByTeamsUsingExpression();
         } finally {
             entityManagerFactory.close();
         }
@@ -88,14 +89,44 @@ public class EmployeeMain {
         resultList.forEach(System.out::println);
         em.close();
     }
+    
+    //Using expressions 
+    private static void findByTeamsUsingExpression() {
+        System.out.println("Expressions");
+        EntityManager em = entityManagerFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<EmployeeModel> query = criteriaBuilder.createQuery(EmployeeModel.class);
+        Root<EmployeeModel> employee = query.from(EmployeeModel.class);
+        
+        //Like Expression
+        query.select(employee).where(criteriaBuilder.like(employee.get("position"),"E%"));
+        TypedQuery<EmployeeModel> typedQuery = em.createQuery(query);
+        List<EmployeeModel> resultList = typedQuery.getResultList();
+        resultList.forEach(System.out::println);
+        
+        //Between Salary Range
+        query.select(employee).where(criteriaBuilder.between(employee.get("salary"),700000,1000000));
+        TypedQuery<EmployeeModel> typedQuery1 = em.createQuery(query);
+        List<EmployeeModel> resultList1 = typedQuery1.getResultList();
+        
+        //Less Than salary range
+        query.select(employee).where(criteriaBuilder.lt(employee.get("salary"),700000));
+        TypedQuery<EmployeeModel> typedQuery2 = em.createQuery(query);
+        List<EmployeeModel> resultList2 = typedQuery2.getResultList();
+        
+        resultList.forEach(System.out::println);
+        resultList1.forEach(System.out::println);
+        resultList2.forEach(System.out::println);
+        em.close();
+    }
 
     public static void persistEmployees() {
-    	EmployeeModel e1 = EmployeeModel.create("Tanya", "Backend", "E4");
-    	EmployeeModel e2 = EmployeeModel.create("Gulpreet", "UI", "E2");
-    	EmployeeModel e3 = EmployeeModel.create("Aryan", "UI", "E3");
-    	EmployeeModel e4 = EmployeeModel.create("Surabhi", "Backend", "E3");
-    	EmployeeModel e5 = EmployeeModel.create("Shiv", "Testing", "E3");
-    	EmployeeModel e6 = EmployeeModel.create("Shivani", "Testing", "E4");
+    	EmployeeModel e1 = EmployeeModel.create("Tanya", "Backend", "E4",800000);
+    	EmployeeModel e2 = EmployeeModel.create("Gulpreet", "UI", "E2",500000);
+    	EmployeeModel e3 = EmployeeModel.create("Aryan", "UI", "E3",600000);
+    	EmployeeModel e4 = EmployeeModel.create("Surabhi", "Backend", "E3",600000);
+    	EmployeeModel e5 = EmployeeModel.create("Shiv", "Testing", "E3",600000);
+    	EmployeeModel e6 = EmployeeModel.create("Shivani", "Testing", "E4",900000);
     	TeamModel t1 = TeamModel.create("UI","Pro1","Sneha");
     	TeamModel t2 = TeamModel.create("Backend","Pro2","Trasha");
     	TeamModel t3 = TeamModel.create("Testing","Pro3","Manish");
