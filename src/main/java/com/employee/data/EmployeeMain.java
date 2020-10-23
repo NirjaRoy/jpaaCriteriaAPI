@@ -14,9 +14,8 @@ import javax.persistence.criteria.Root;
 import com.employee.entity.EmployeeModel;
 import com.employee.entity.TeamModel;
 
-public class EmployeeMain {
-	 private static EntityManagerFactory entityManagerFactory =
-	           Persistence.createEntityManagerFactory("my-unit"); 
+   public class EmployeeMain {
+	private static EntityManagerFactory entityManagerFactory =Persistence.createEntityManagerFactory("my-unit"); 
 	public static void main(String[] args) {
         try {
             persistEmployees();
@@ -27,11 +26,11 @@ public class EmployeeMain {
             findByTeamsUsingExpression();
         } finally {
             entityManagerFactory.close();
-        }
-
-	}
-	private static void EmployeeData() {
-		System.out.println("Empoyees data sorted by teams ");
+          }
+   }
+	
+   private static void EmployeeData() {
+	System.out.println("Empoyees data sorted by teams ");
     	EntityManager em = entityManagerFactory.createEntityManager();
     	CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
     	CriteriaQuery<EmployeeModel> query = criteriaBuilder.createQuery(EmployeeModel.class);
@@ -42,8 +41,9 @@ public class EmployeeMain {
 	   List<EmployeeModel> resultlist = typedQuery1.getResultList();
 	   resultlist.forEach(System.out::println);
        em.close();
-}
-	//Predicate -IN
+  }
+	   
+    //Predicate -IN
     private static void findByTeam() {
         System.out.println("Empoyees in Backend and UI Team");
         EntityManager em = entityManagerFactory.createEntityManager();
@@ -58,9 +58,9 @@ public class EmployeeMain {
     }
     
     //Nested Predicate - OR & AND 
-	private static void findByTeamAndLevel() {
-		System.out.println("Employees with Team= UI or Backend & position");
-		EntityManager em = entityManagerFactory.createEntityManager();
+    private static void findByTeamAndLevel() {
+	System.out.println("Employees with Team= UI or Backend & position");
+	EntityManager em = entityManagerFactory.createEntityManager();
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<EmployeeModel> query = criteriaBuilder.createQuery(EmployeeModel.class);
         Root<EmployeeModel> employee = query.from(EmployeeModel.class);
@@ -76,7 +76,7 @@ public class EmployeeMain {
         em.close();
 	}
 	
-	//Predicate -Not IN
+    //Predicate -Not IN
     private static void findByTeams() {
         System.out.println("Empoyees in not in E1 and E4");
         EntityManager em = entityManagerFactory.createEntityManager();
