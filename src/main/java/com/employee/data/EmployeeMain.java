@@ -35,12 +35,12 @@ import com.employee.entity.TeamModel;
     	CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
     	CriteriaQuery<EmployeeModel> query = criteriaBuilder.createQuery(EmployeeModel.class);
     	Root<EmployeeModel> employee = query.from(EmployeeModel.class);
-	    CriteriaQuery<EmployeeModel> selectquery = query.select(employee);
-	    selectquery.orderBy(criteriaBuilder.asc(employee.get("team")));
-	   TypedQuery<EmployeeModel> typedQuery1 = em.createQuery(selectquery);
-	   List<EmployeeModel> resultlist = typedQuery1.getResultList();
-	   resultlist.forEach(System.out::println);
-       em.close();
+	CriteriaQuery<EmployeeModel> selectquery = query.select(employee);
+	selectquery.orderBy(criteriaBuilder.asc(employee.get("team")));
+	TypedQuery<EmployeeModel> typedQuery1 = em.createQuery(selectquery);
+	List<EmployeeModel> resultlist = typedQuery1.getResultList();
+	resultlist.forEach(System.out::println);
+        em.close();
   }
 	   
     //Predicate -IN
